@@ -21,7 +21,7 @@ Don't ask why we felt the need to create this. 🙂
    Direct link to Selenium docs (in case you want to use it with any other
   browser apart from Chrome):
   [Selenium Docs](https://www.selenium.dev/documentation/getting_started/installing_browser_drivers/#quick-reference)
-
+- Unzip the downloaded file and keep the `.exe` file in the same folder as this program.
 ## Usage
 
 - Run the program with `python main.py`
@@ -32,6 +32,7 @@ Don't ask why we felt the need to create this. 🙂
 Now you have the huuuge data that woudl've been boring to collect manually, all
 thanks to computer automation ✌ Feel free to modify the generated `.sql` file
 
+**If you face any issue feel free to [open an issue](https://github.com/Ya-s-h/db-lab-autmation-hax/issues/new) in the repository**
 ## License
 
 This project is licensed under GNU GPLv3
