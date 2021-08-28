@@ -1,6 +1,6 @@
 import os
 
-file_path = str(os.getcwd()) + "/dataFile.txt"
+file_path = str(os.getcwd()) + "/dataFile.sql"
 
 if os.path.exists(file_path):
     print('file already exists')
