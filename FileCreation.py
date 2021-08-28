@@ -1,11 +1,21 @@
 import os
 
-file_path = "dataFile.sql"
+file_path = "dataFile"
 
-if os.path.exists(file_path):
-    print('file already exists')
-else:
-    print("Not exists... New File will be created")
+
+def generate_file_name(pattern: str, number: int) -> str:
+    return f"{pattern}_{number}.sql"
+
+
+file_name = file_path
+count = 0
+valid_name = False
+while valid_name is False:
+    if os.path.isfile(generate_file_name(file_name, count)):
+        count += 1
+    else:
+        valid_name = True
+        file_path = generate_file_name(file_name, count)
 
 
 def dataInsertion(Data: list):
