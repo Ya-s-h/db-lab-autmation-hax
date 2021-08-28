@@ -77,7 +77,9 @@ def login_codezinger(driver: webdriver.Chrome, username: str = "", password: str
 
 
 def expand_all_labs(driver: webdriver.Chrome):
-    buttons = driver.find_elements_by_xpath(FOLDER_BUTTON_XPATH)
+    buttons = []
+    while not buttons:
+        buttons = driver.find_elements_by_xpath(FOLDER_BUTTON_XPATH)
     # print(buttons)
     for button in buttons:
         button.click()
@@ -88,27 +90,44 @@ def get_data(driver: webdriver.Chrome) -> List[dict]:
     data_list: List[dict, ...] = []
     questions = driver.find_elements_by_xpath(QUESTIONS_XPATH)
 
+    print()
     question: selenium.webdriver.remote.webelement.WebElement
-    for question in questions:
-        problem_no = question.find_element_by_xpath(PROBLEM_NUMBER_XPATH).text
-        question_title = question.find_element_by_xpath(QUESTION_TITLE_XPATH).text
-        due_date = question.find_element_by_xpath(DUE_DATE_XPATH).text.rstrip(" /-")
-        status = question.find_element_by_xpath(STATUS_XPATH).text
+    for index, question in enumerate(questions):
+        print("Processing data... ({:3.0%})".format(index/len(questions)), end="\r")
 
-        parsed_date: datetime = datetime.strptime(due_date, "%d %b %I:%M %p")
-        parsed_date = parsed_date.replace(year=datetime.now().year)
+        problem_no = safe_find_element_by_xpath(question, PROBLEM_NUMBER_XPATH)
+        question_title = safe_find_element_by_xpath(question, QUESTION_TITLE_XPATH)
+        due_date = safe_find_element_by_xpath(question, DUE_DATE_XPATH).rstrip(" /-")
+        status = safe_find_element_by_xpath(question, STATUS_XPATH)
+
+        try:
+            parsed_date = datetime.strptime(due_date, "%d %b %I:%M %p")
+            parsed_date = parsed_date.replace(year=datetime.now().year)
+            parsed_date = parsed_date.isoformat()
+        except ValueError:
+            parsed_date = "NULL"
 
         data = {
             "problem_desc": problem_no + " " + question_title,
             "assigned_date": "NULL",
-            "submission_date": parsed_date.isoformat(),
-            "status": status == "Submitted"
+            "submission_date": parsed_date,
+            "status": status == "Submitted" if status != "NULL" else status
         }
         data_list.append(data)
+    print()
 
     print("Scraped", len(questions), "questions")
 
     return data_list
+
+
+def safe_find_element_by_xpath(element: selenium.webdriver.remote.webelement.WebElement, xpath: str) -> str:
+    result: str
+    try:
+        result = element.find_element_by_xpath(xpath).text
+    except NoSuchElementException:
+        result = "NULL"
+    return result
 
 
 if __name__ == '__main__':

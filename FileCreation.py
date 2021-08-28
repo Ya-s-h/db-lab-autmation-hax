@@ -41,11 +41,12 @@ def dataInsertion(Data: list):
         fp.write("Insert into labreport\nvalues\n")
 
         for COUNT, data in enumerate(Data):
-            problem_desc = data.get("problem_desc")
+            problem_desc = data.get("problem_desc").replace("'", "''")
             assign_date = data.get("assigned_date")
             due_date = data.get("submission_date")
+            due_date = f"\'{due_date}\'" if due_date != "NULL" else due_date
             mission_status = 1 if data.get("status") else 0
-            fp.write(f"\t({COUNT + 1},'{problem_desc}', {assign_date}, '{due_date}', {mission_status})")
+            fp.write(f"\t({COUNT + 1},'{problem_desc}', {assign_date}, {due_date}, {mission_status})")
             if COUNT != len(Data) - 1: fp.write(",\n")
             else: fp.write("\n")
         fp.write(";")
