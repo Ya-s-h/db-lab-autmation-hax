@@ -22,26 +22,16 @@ def dataInsertion(Data: list):
     with open(file_path, "w") as fp:
         # fp.write("CREATE TABLE IF NOT EXISTS labreport(")
         # print(len(Data))
-        fp.write("Insert into labreport\n\t values\n\t")
-        for count, dic in enumerate(Data):
-            fp.write("(")
-            fp.write(str(count + 1) + ", ")
+        fp.write("Insert into labreport\nvalues\n")
 
-            for countValues, value in enumerate(dic.values()):
-                if countValues != len(dic) - 1:
-                    if type(value) == str:
-                        fp.write("'%s' ," % value)
-                    else:
-                        fp.write("%s ," % value)
-                else:
-                    if type(value) == str:
-                        fp.write("'%s'" % value)
-                    else:
-                        fp.write("%s" % value)
-            if count != len(Data) - 1:
-                fp.write("),\n\t")
-            else:
-                fp.write(")")
+        for COUNT, data in enumerate(Data):
+            problem_desc = data.get("problem_desc")
+            assign_date = data.get("assigned_date")
+            due_date = data.get("submission_date")
+            mission_status = 1 if data.get("status") else 0
+            fp.write(f"\t({COUNT + 1},'{problem_desc}', {assign_date}, '{due_date}', {mission_status})")
+            if COUNT != len(Data) - 1: fp.write(",\n")
+            else: fp.write("\n")
         fp.write(";")
 
 
