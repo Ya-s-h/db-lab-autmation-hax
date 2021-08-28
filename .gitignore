@@ -7,6 +7,8 @@ bin-release/
 # Other files and folders
 .settings/
 .idea/
+__pycache__/
+dataFile*.sql
 
 # Executables
 *.swf
