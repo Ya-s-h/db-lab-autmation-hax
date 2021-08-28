@@ -1,3 +1,19 @@
+"""
+    Copyright (c) 2021 Ya-s-h, RoguedBear
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
 import sys
 import traceback
 from time import sleep
@@ -36,6 +52,10 @@ def driver_exists():
 if __name__ == '__main__':
     driver_exists()
     driver = webdriver.Chrome()
+    print("""DB-Hax  Copyright (C) 2021  RoguedBear, Ya-s-h
+    This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+    This is free software, and you are welcome to redistribute it
+    under certain conditions; type `show c' for details.""")
     try:
         main(driver)
     except Exception as ex:
