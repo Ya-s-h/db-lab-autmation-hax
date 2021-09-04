@@ -32,26 +32,43 @@ while valid_name is False:
     else:
         valid_name = True
         file_path = generate_file_name(file_name, count)
+def listToString(s):
+    # initialize an empty string
+    str1 = ""
 
+    # traverse in the string
+    for ele in s:
+        str1 += ele
+
+        # return string
+    return str1
 
 def dataInsertion(Data: list):
     with open(file_path, "w") as fp:
         # fp.write("CREATE TABLE IF NOT EXISTS labreport(")
         # print(len(Data))
+        fp.write("use myimsdb;\n")
+        fp.write("truncate labreport;\n")
         fp.write("Insert into labreport\nvalues\n")
 
         for COUNT, data in enumerate(Data):
             problem_desc = data.get("problem_desc").replace("'", "''")
             assign_date = data.get("assigned_date")
             due_date = data.get("submission_date")
+            problem_desc = fileFormatter(problem_desc)
             due_date = f"\'{due_date}\'" if due_date != "NULL" else due_date
-            mission_status = 1 if data.get("status") else 0
+            mission_status = "Done" if data.get("status") else "Not Done"
             fp.write(f"\t({COUNT + 1},'{problem_desc}', {assign_date}, {due_date}, {mission_status})")
             if COUNT != len(Data) - 1: fp.write(",\n")
             else: fp.write("\n")
         fp.write(";")
+    return file_path
 
-
+def fileFormatter(Text : str):
+    if len(Text) >= 200:
+        return Text[0:10] + "..."
+    else:
+        return Text
 if __name__ == "__main__":
     test_data = [{'assigned_date': 'NULL',
                   'problem_desc': '1.1 Create table',
