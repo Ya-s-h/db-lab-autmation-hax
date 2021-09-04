@@ -11,9 +11,9 @@ Don't ask why we felt the need to create this. 🙂
   clone: \
   `git clone https://github.com/Ya-s-h/db-lab-autmation-hax.git`
 - install requirements \
-  ```python
-  pip install -r requirements.txt
-  ```
+  `pip install -r requirements.txt`\
+  or \
+  `python -m pip install -r requirements.txt`
 - Download the WebDriver for Chrome to use with selenium \
    Direct link for chrome:
   [link](https://chromedriver.storage.googleapis.com/index.html?path=92.0.4515.107/)

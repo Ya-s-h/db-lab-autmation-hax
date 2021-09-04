@@ -52,22 +52,16 @@ def dataInsertion(Data: list):
         fp.write("Insert into labreport\nvalues\n")
 
         for COUNT, data in enumerate(Data):
-            problem_desc = data.get("problem_desc")
+            problem_desc = data.get("problem_desc").replace("'", "''")
             assign_date = data.get("assigned_date")
             due_date = data.get("submission_date")
+            problem_desc = fileFormatter(problem_desc)
+            due_date = f"\'{due_date}\'" if due_date != "NULL" else due_date
             mission_status = "Done" if data.get("status") else "Not Done"
-            s = list(problem_desc)
-            for i in range(len(s)):
-                if s[i] == "'":
-                    s[i] = '"'
-                else:continue
-            problem_desc = fileFormatter(listToString(s))
-            fp.write(f"({COUNT + 1 }, '{problem_desc}', {assign_date}, '{due_date}', '{mission_status}')")
-            if COUNT != len(Data) - 1:
-                fp.write(",\n")
-            else:
-                fp.write("\n")
-        fp.write(";\n")
+            fp.write(f"\t({COUNT + 1},'{problem_desc}', {assign_date}, {due_date}, {mission_status})")
+            if COUNT != len(Data) - 1: fp.write(",\n")
+            else: fp.write("\n")
+        fp.write(";")
     return file_path
 
 def fileFormatter(Text : str):

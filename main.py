@@ -70,9 +70,9 @@ if __name__ == '__main__':
     driver_exists()
     driver = webdriver.Chrome(executable_path=r"C:\Users\Yash\Downloads\chromedriver_win32\chromedriver.exe")
     print("""DB-Hax  Copyright (C) 2021  RoguedBear, Ya-s-h
-    This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+    This program comes with ABSOLUTELY NO WARRANTY; see COPYING
     This is free software, and you are welcome to redistribute it
-    under certain conditions; type `show c' for details.""")
+    under certain conditions; see COPYING""")
     try:
         main(driver)
     except Exception as ex:
