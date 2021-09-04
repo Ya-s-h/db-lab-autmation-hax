@@ -17,21 +17,38 @@
 import sys
 import traceback
 from time import sleep
-
 from selenium import webdriver
-
 from FileCreation import dataInsertion
 from scrap_data import *
+from db import *
+import mysql.connector
+
+host_args = {
+    "host": "localhost",
+    "user": "root",
+    "password": ""
+}
+
+con = mysql.connector.connect(**host_args)
+
+cur = con.cursor(dictionary=True)
+
+sno = [[1, 6], [6, 14], [14, 25]]
+date = ['2021-08-24', '2021-08-28', '2021-08-31']
 
 
 def main(driver: webdriver.Chrome):
     print("A new CHROME browser window will open with the codezinger link in it")
     print("You have to enter your login and password.")
     # input("Press enter to continue... ")
-    login_codezinger(driver, "e20cse215@bennett.edu.in", "humpydumpy")
+    login_codezinger(driver)
     expand_all_labs(driver)
     data = get_data(driver)
-    dataInsertion(data)
+    file_name = dataInsertion(data)
+    exec_sql_file(cur, file_name)
+    dateAssign(cur, sno, date)
+    con.commit()
+    con.close()
 
 
 def driver_exists():
@@ -51,7 +68,7 @@ def driver_exists():
 
 if __name__ == '__main__':
     driver_exists()
-    driver = webdriver.Chrome()
+    driver = webdriver.Chrome(executable_path=r"C:\Users\Yash\Downloads\chromedriver_win32\chromedriver.exe")
     print("""DB-Hax  Copyright (C) 2021  RoguedBear, Ya-s-h
     This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
     This is free software, and you are welcome to redistribute it

@@ -34,6 +34,10 @@ DEBUG = False
 
 # ========
 
+loginDetails = list()
+with open("login",'r') as  file:
+    loginDetails  = file.readlines()
+
 
 def main(driver: webdriver.Chrome):
     print("A new CHROME browser window will open with the codezinger link in it")
@@ -45,7 +49,7 @@ def main(driver: webdriver.Chrome):
     pprint(data)
 
 
-def login_codezinger(driver: webdriver.Chrome, username: str = "", password: str = ""):
+def login_codezinger(driver: webdriver.Chrome, username: str = loginDetails[0], password: str = loginDetails[1]):
     driver.get("https://labs.codezinger.com/student/classes/611dc47ba6ae540012d2130f")
 
     # Auto login
@@ -123,3 +127,4 @@ if __name__ == '__main__':
     except Exception as ex:
         traceback.print_exception(type(ex), ex, ex.__traceback__)
         driver.close()
+    # print(type(loginDetails[0]))
